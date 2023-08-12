@@ -19,7 +19,7 @@ APP_ID = int(os.environ.get("APP_ID", ""))
 API_HASH = os.environ.get("API_HASH", "")
 
 #shorten url API
-API_KEY = int(os.environ.get("API_KEY", "9590cdc3308afc15a447eadf2cee3005ac067d19"))
+API_KEY = os.environ.get("API_KEY", "9590cdc3308afc15a447eadf2cee3005ac067d19")
 
 
 
