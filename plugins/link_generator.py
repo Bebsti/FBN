@@ -12,15 +12,7 @@ bot = Client('pdiskshortner bot',
              sleep_threshold=10)
 
 
-# Your function to get a shortened link using ClicksFly API
-async def get_shortlink(link):
-    url = 'https://clicksfly.com/api'
-    params = {'api': API_KEY, 'url': link}
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url, params=params, raise_for_status=True) as response:
-            data = await response.json()
-            return data["shortenedUrl"]
 
 
 # Your handler function for the "genlink" and "batch" commands
@@ -48,8 +40,19 @@ async def link_handler(client: Client, message: Message):
     base64_string = await encode(f"get-{msg_id * abs(client.db_channel.id)}")
     link = f"https://t.me/{client.username}?start={base64_string}"
 
+
+  # Your function to get a shortened link using ClicksFly API
+   async def get_shortlink(link1):
+    url = 'https://clicksfly.com/api'
+    params = {'api': API_KEY, 'url': link}
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, params=params, raise_for_status=True) as response:
+            data = await response.json()
+            return data["shortenedUrl"]
+
     try:
-        short_link = await get_shortlink(link)  # Call get_shortlink function here
+        short_link = await get_shortlink(link1)  # Call get_shortlink function here
         reply_markup = InlineKeyboardMarkup([
             [InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={short_link}')]
         ])
@@ -58,4 +61,4 @@ async def link_handler(client: Client, message: Message):
         await channel_message.reply(f'Error: {e}', quote=True)
 
 
-bot.run()
+
