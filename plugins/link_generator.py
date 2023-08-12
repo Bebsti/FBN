@@ -3,14 +3,14 @@ import base64
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from bot import Bot  # Assuming this is properly imported
-from config import ADMINS, API_KEY ,BOT_TOKEN,API_HASH,API_ID
+from config import ADMINS, API_KEY ,TG_BOT_TOKEN,API_HASH,APP_ID
 from helper_func import encode, get_message_id
 
 
 bot = Client('pdiskshortner bot',
-             api_id=API_ID,
+             api_id=APP_ID,
              api_hash=API_HASH,
-             bot_token=BOT_TOKEN,
+             bot_token=TG_BOT_TOKEN,
              workers=50,
              sleep_threshold=10)
 
@@ -26,7 +26,7 @@ async def get_shortlink(link):
             return data["shortenedUrl"]
 
 # Your handler function for the "genlink" and "batch" commands
-@app.on_message(filters.private & filters.user(ADMINS) & filters.command(['genlink', 'batch']))
+@bot.on_message(filters.private & filters.user(ADMINS) & filters.command(['genlink', 'batch']))
 async def link_handler(client: Client, message: Message):
     while True:
         try:
