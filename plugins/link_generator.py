@@ -1,11 +1,8 @@
 import aiohttp
-import base64
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from bot import Bot  # Assuming this is properly imported
-from config import ADMINS, API_KEY ,TG_BOT_TOKEN,API_HASH,APP_ID
+from config import ADMINS, API_KEY, TG_BOT_TOKEN, API_HASH, APP_ID
 from helper_func import encode, get_message_id
-
 
 bot = Client('pdiskshortner bot',
              api_id=APP_ID,
@@ -24,6 +21,7 @@ async def get_shortlink(link):
         async with session.get(url, params=params, raise_for_status=True) as response:
             data = await response.json()
             return data["shortenedUrl"]
+
 
 # Your handler function for the "genlink" and "batch" commands
 @bot.on_message(filters.private & filters.user(ADMINS) & filters.command(['genlink', 'batch']))
@@ -51,7 +49,7 @@ async def link_handler(client: Client, message: Message):
     link = f"https://t.me/{client.username}?start={base64_string}"
 
     try:
-        short_link = await get_shortlink(link)
+        short_link = await get_shortlink(link)  # Call get_shortlink function here
         reply_markup = InlineKeyboardMarkup([
             [InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={short_link}')]
         ])
@@ -60,3 +58,4 @@ async def link_handler(client: Client, message: Message):
         await channel_message.reply(f'Error: {e}', quote=True)
 
 
+bot.run()
