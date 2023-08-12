@@ -3,9 +3,16 @@ import base64
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from bot import Bot  # Assuming this is properly imported
-from config import ADMINS, API_KEY
+from config import ADMINS, API_KEY ,BOT_TOKEN,API_HASH,API_ID
 from helper_func import encode, get_message_id
 
+
+bot = Client('pdiskshortner bot',
+             api_id=API_ID,
+             api_hash=API_HASH,
+             bot_token=BOT_TOKEN,
+             workers=50,
+             sleep_threshold=10)
 
 
 # Your function to get a shortened link using ClicksFly API
